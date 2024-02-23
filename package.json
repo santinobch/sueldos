@@ -1,0 +1,28 @@
+{
+  "name": "sueldos",
+  "version": "1.0.0",
+  "description": "Calculadora de sueldos IT basado en dataset de sysarmy.",
+  "main": "index.js",
+  "scripts": {
+    "csv-to-sql": "tsc ./src/index.ts && node ./dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/santinobch/sueldos.git"
+  },
+  "author": "santinobch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/santinobch/sueldos/issues"
+  },
+  "homepage": "https://github.com/santinobch/sueldos#readme",
+  "devDependencies": {
+    "@types/node": "^20.11.20",
+    "prettier": "3.2.5",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "csv": "^6.3.6",
+    "date-fns": "^3.3.1"
+  }
+}
