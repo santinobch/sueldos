@@ -1,8 +1,14 @@
-import { MES_NUMBER } from './consts';
-import { Actualizacion, Bono, MesActualizacion } from './enums';
+import { MONTH_NUMBER } from './consts';
+import {
+  Actualizacion,
+  Bono,
+  Empleados,
+  GuardiaRelacion,
+  GuardiaTiene,
+  MesActualizacion,
+  Modalidad,
+} from './enums';
 import { Dataset } from './interfaces';
-
-const { zonedTimeToUtc } = require('date-fns-tz');
 
 export function parseEmptyStrings(row: string[]): (string | null)[] {
   return row.map(field => {
@@ -32,19 +38,19 @@ function parseMesActualizacion(
   const yearOfDataset = dateOfDataset.getFullYear();
   const monthOfDataset = dateOfDataset.getMonth();
 
-  const monthUpdateIndex = MES_NUMBER.findIndex(item => {
+  const monthUpdateIndex = MONTH_NUMBER.findIndex(item => {
     if (item === monthUpdate) return true;
+    return false;
   });
 
   const yearModifier = monthUpdateIndex > monthOfDataset ? -1 : 0;
 
-  return zonedTimeToUtc(
-    `${monthUpdate} 1, ${yearOfDataset + yearModifier} 01:00:00`,
-    'Etc/UTC'
+  return new Date(
+    `${monthUpdate} 1, ${yearOfDataset + yearModifier} 01:00:00`
   ).getTime();
 }
 
-function parseColumns(
+export function parseColumns(
   row: (string | null)[],
   dataset: Dataset[],
   dateOfDataset: Date
@@ -72,7 +78,7 @@ function parseColumns(
       herramientas: row[23],
       database: row[24],
       testing: row[25],
-      modalidad: row[27],
+      modalidad: row[27] as Modalidad,
       herramientas_IA: row[30],
 
       salario: {
@@ -100,7 +106,7 @@ function parseColumns(
     },
 
     empresa: {
-      empleados: row[26], //Requiere parser especial
+      empleados: row[26] as Empleados,
       recomendado: parseIntNull(row[29]),
     },
 
@@ -112,9 +118,9 @@ function parseColumns(
     },
 
     guardia: {
-      tiene: row[37], // Requiere parser especial
+      tiene: row[37] as GuardiaTiene,
       cobro: parseIntNull(row[38]),
-      numero: row[39], //Requiere parser especial
+      relacion: row[39] as GuardiaRelacion, //Requiere parser especial
     },
   });
 }

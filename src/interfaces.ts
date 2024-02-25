@@ -1,4 +1,11 @@
-import { Actualizacion, Bono } from './enums';
+import {
+  Actualizacion,
+  Bono,
+  Empleados,
+  GuardiaRelacion,
+  GuardiaTiene,
+  Modalidad,
+} from './enums';
 
 export interface Dataset {
   pais: string | null;
@@ -24,7 +31,7 @@ export interface Dataset {
     herramientas: string | null;
     database: string | null;
     testing: string | null;
-    modalidad: string | null;
+    modalidad: Modalidad | null;
     herramientas_IA: string | null;
 
     salario: {
@@ -52,7 +59,7 @@ export interface Dataset {
   };
 
   empresa: {
-    empleados: string | null;
+    empleados: Empleados | null;
     recomendado: number | null;
   };
 
@@ -64,8 +71,27 @@ export interface Dataset {
   };
 
   guardia: {
-    tiene: string | null;
+    tiene: GuardiaTiene | null;
     cobro: number | null;
-    numero: string | null;
+    relacion: GuardiaRelacion | null;
+  };
+}
+
+export interface IndecSeries {
+  data: [string, number][];
+  count: number;
+  meta: [any];
+  params: {
+    ids: string;
+    collapse: string;
+    representation_mode: string;
+    format: string;
+    identifiers: [
+      {
+        id: string;
+        distribution: string;
+        dataset: string;
+      },
+    ];
   };
 }

@@ -2,9 +2,11 @@
   "name": "sueldos",
   "version": "1.0.0",
   "description": "Calculadora de sueldos IT basado en dataset de sysarmy.",
-  "main": "index.js",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
   "scripts": {
-    "csv-to-sql": "tsc ./src/index.ts && node ./dist/index.js"
+    "watch": "tsc -w --project tsconfig-cjs.json && tsc -w --project tsconfig.json",
+    "csv-to-sql": "tsc --project tsconfig-cjs.json && tsc --project tsconfig.json && node ./dist/cjs/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +20,14 @@
   "homepage": "https://github.com/santinobch/sueldos#readme",
   "devDependencies": {
     "@types/node": "^20.11.20",
+    "@types/pg": "^8.11.1",
     "prettier": "3.2.5",
     "typescript": "^5.3.3"
   },
   "dependencies": {
     "csv": "^6.3.6",
-    "date-fns": "^3.3.1"
+    "pg": "^8.11.3",
+    "rxjs": "^7.8.1",
+    "sql-formatter": "^15.2.0"
   }
 }
