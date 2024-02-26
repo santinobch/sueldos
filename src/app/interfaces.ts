@@ -1,6 +1,7 @@
 import {
   Actualizacion,
   Bono,
+  Dolares,
   Empleados,
   GuardiaRelacion,
   GuardiaTiene,
@@ -37,14 +38,14 @@ export interface Dataset {
     salario: {
       bruto: number | null;
       neto: number | null;
-      dolares: string | null;
+      dolares: Dolares | null;
       valor_dolar: number | null;
       conformidad: number | null;
       beneficios_adicionales: string | null;
     };
 
     bono: {
-      cantidad: Bono | null;
+      bonoCantidad: Bono | null;
       // Ignorando este campo, demasiado complejo,
       // parsear requeriria alguna IA de texto o filtro manual de todos los datos
       // atado: string;

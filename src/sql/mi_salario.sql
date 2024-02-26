@@ -1,30 +1,29 @@
 select 
 	count(*) as Encuestados,
-    avg (Ultimo_salario_mensual_BRUTO_moneda_local)::numeric(10,2)  as Bruto, 
-    avg (Ultimo_salario_mensual_NETO_moneda_local)::numeric(10,2)  as Neto,
-    avg (Ultimo_salario_mensual_BRUTO_moneda_local * 1.248)::numeric(10,2)  as Bruto_inflacion,
-    avg (Ultimo_salario_mensual_NETO_moneda_local * 1.248)::numeric(10,2)  as Neto_inflacion,
-    min(Ultimo_salario_mensual_BRUTO_moneda_local) as Bruto_minimo,
-    max(Ultimo_salario_mensual_BRUTO_moneda_local) as Bruto_maximo,
-    min(Ultimo_salario_mensual_NETO_moneda_local) as Neto_minimo,
-    max(Ultimo_salario_mensual_NETO_moneda_local) as Neto_maximo,
-    min(Ultimo_salario_mensual_BRUTO_moneda_local) * 1.248 as Bruto_minimo_inflacion,
-    max(Ultimo_salario_mensual_BRUTO_moneda_local) * 1.248 as Bruto_maximo_inflacion,
-    min(Ultimo_salario_mensual_NETO_moneda_local) * 1.248 as Neto_minimo_inflacion,
-    max(Ultimo_salario_mensual_NETO_moneda_local) * 1.248 as Neto_maximo_inflacion
-from sueldos 
+    avg (trabajo_salario_bruto)::numeric(10,2)  as Bruto, 
+    avg (trabajo_salario_neto)::numeric(10,2)  as Neto,
+    avg (trabajo_salario_bruto * 2.4927)::numeric(10,2)  as Bruto_inflacion,
+    avg (trabajo_salario_neto * 2.4927)::numeric(10,2)  as Neto_inflacion,
+    min(trabajo_salario_bruto) as Bruto_minimo,
+    max(trabajo_salario_bruto) as Bruto_maximo,
+    min(trabajo_salario_neto) as Neto_minimo,
+    max(trabajo_salario_neto) as Neto_maximo,
+    min(trabajo_salario_bruto) * 2.4927 as Bruto_minimo_inflacion,
+    max(trabajo_salario_bruto) * 2.4927 as Bruto_maximo_inflacion,
+    min(trabajo_salario_neto) * 2.4927 as Neto_minimo_inflacion,
+    max(trabajo_salario_neto) * 2.4927 as Neto_maximo_inflacion
+from salaries 
 where 
-	Ultimo_salario_mensual_BRUTO_moneda_local > 10000 and
-	Especializacion = 'Developer' and 
-    Años_de_experiencia <= 2 and
-    Años_de_experiencia >= 1 and
-    Ubicacion = 'Ciudad Autónoma de Buenos Aires' and
-    Edad <= 25 and 
-    Edad >= 21 
-	and
+	trabajo_salario_bruto > 200000 and
+	trabajo_especializacion = 'Developer' and 
+    trabajo_tiempo_experiencia <= 3 and
+    trabajo_tiempo_experiencia >= 2 and
+    provincia = 'Ciudad Autónoma de Buenos Aires' and
+    Edad <= 28 and 
+    Edad >= 22 and
 	(
-		Lenguajes ILIKE '%javascript%' or
-        Lenguajes ILIKE '%css%' or
-        Lenguajes ILIKE '%html%' or
-        Lenguajes ILIKE '%sql%'
+		trabajo_tecnologias ILIKE '%javascript%' or
+        trabajo_tecnologias ILIKE '%css%' or
+        trabajo_tecnologias ILIKE '%html%' or
+        trabajo_tecnologias ILIKE '%sql%'
 	)

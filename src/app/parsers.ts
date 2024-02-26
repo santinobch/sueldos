@@ -1,7 +1,8 @@
-import { MONTH_NUMBER } from './consts';
+import { EXAMPLE_DATASET, MONTH_NUMBER } from './consts';
 import {
   Actualizacion,
   Bono,
+  Dolares,
   Empleados,
   GuardiaRelacion,
   GuardiaTiene,
@@ -9,6 +10,9 @@ import {
   Modalidad,
 } from './enums';
 import { Dataset } from './interfaces';
+import fs from 'fs';
+import { keysExtractor, valuesExtractor } from './objects';
+import { format } from 'sql-formatter';
 
 export function parseEmptyStrings(row: string[]): (string | null)[] {
   return row.map(field => {
@@ -24,7 +28,14 @@ function parseIntNull(s: string | null): number | null {
   if (s === null) {
     return null;
   }
-  return parseInt(s);
+
+  const parsedInt = parseInt(s);
+
+  if (isNaN(parsedInt)) {
+    return null;
+  }
+
+  return parsedInt;
 }
 
 function parseMesActualizacion(
@@ -43,11 +54,17 @@ function parseMesActualizacion(
     return false;
   });
 
+  if (monthUpdateIndex === -1) {
+    return null;
+  }
+
   const yearModifier = monthUpdateIndex > monthOfDataset ? -1 : 0;
 
-  return new Date(
-    `${monthUpdate} 1, ${yearOfDataset + yearModifier} 01:00:00`
-  ).getTime();
+  const date = new Date();
+  date.setFullYear(yearOfDataset + yearModifier, monthUpdateIndex, 1);
+  date.setHours(1, 0, 0, 0);
+
+  return new Date(date).getTime();
 }
 
 export function parseColumns(
@@ -84,14 +101,14 @@ export function parseColumns(
       salario: {
         bruto: parseIntNull(row[4]),
         neto: parseIntNull(row[5]),
-        dolares: row[6],
+        dolares: row[6] as Dolares,
         valor_dolar: parseIntNull(row[7]),
         conformidad: parseIntNull(row[15]),
         beneficios_adicionales: row[14],
       },
 
       bono: {
-        cantidad: row[8] as Bono,
+        bonoCantidad: row[8] as Bono,
       },
 
       actualizacion: {
@@ -123,4 +140,71 @@ export function parseColumns(
       relacion: row[39] as GuardiaRelacion, //Requiere parser especial
     },
   });
+}
+
+export function objectToSql(dataset: Dataset[]) {
+  const keys = keysExtractor(dataset[0]);
+  const values = valuesExtractor(EXAMPLE_DATASET);
+
+  let query = `
+      -- Table: public.salaries
+  
+      DROP TABLE IF EXISTS public.salaries;
+  
+      CREATE TABLE IF NOT EXISTS public.salaries ( id SERIAL PRIMARY KEY,`;
+
+  values!.forEach((value, i) => {
+    let type = 'numeric';
+
+    if (typeof value === 'string') {
+      type = 'text';
+    }
+
+    if (i === values!.length - 1) {
+      query += `${keys![i]} ${type}`;
+    } else {
+      query += `${keys![i]} ${type},`;
+    }
+  });
+
+  query += `); `;
+
+  dataset.forEach((row, i) => {
+    let values = '';
+    const extractedValues = valuesExtractor(row);
+
+    extractedValues!.forEach((value, ii) => {
+      if (ii === extractedValues!.length - 1) {
+        if (typeof value === 'string') {
+          values += `'${value}'`;
+        } else {
+          values += `${value}`;
+        }
+      } else {
+        if (typeof value === 'string') {
+          values += `'${value}',`;
+        } else {
+          values += `${value},`;
+        }
+      }
+    });
+
+    query += `INSERT INTO public.salaries VALUES (${i}, ${values});`;
+  });
+
+  // Minified file
+  fs.writeFile('./dist/queries/2023.07_query.min.sql', query, error => {
+    if (error) console.log(error);
+  });
+
+  // Beautified file
+  fs.writeFile(
+    './dist/queries/2023.07_query.sql',
+    format(query, { language: 'postgresql' }),
+    error => {
+      if (error) console.log(error);
+    }
+  );
+
+  return query;
 }

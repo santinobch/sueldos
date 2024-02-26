@@ -27,19 +27,26 @@ export function valuesExtractor(object: any) {
  *
  * @param object
  */
-export function keysExtractor(object: any) {
+export function keysExtractor(object: any, prefix: string = '') {
   if (object === undefined || object === null || typeof object != 'object') {
-    return null;
+    if (prefix === '') {
+      return null;
+    }
+    return prefix;
   }
 
   const keys: any[] = Object.entries(object).map(entry => {
     if (typeof entry[1] === 'object') {
-      return keysExtractor(entry[1]);
+      if (prefix === '') {
+        return keysExtractor(entry[1], entry[0]);
+      }
+      return keysExtractor(entry[1], `${prefix}_${entry[0]}`);
     }
-    return entry[0];
+    if (prefix === '') {
+      return entry[0];
+    }
+    return `${prefix}_${entry[0]}`;
   });
 
   return keys.flat(5);
 }
-
-export function ObjectToPostgreSQL() {}

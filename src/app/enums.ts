@@ -1,3 +1,11 @@
+//ror[6]
+export enum Dolares {
+  PESOS = '',
+  DOLARIZADO = 'Mi sueldo está dolarizado (pero cobro en moneda local)',
+  PARTE_DOLAR = 'Cobro parte del salario en dólares',
+  FULL_DOLAR = 'Cobro todo el salario en dólares',
+}
+
 // row[8]
 export enum Bono {
   CERO = 'No',

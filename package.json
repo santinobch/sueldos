@@ -6,7 +6,7 @@
   "module": "./dist/esm/index.js",
   "scripts": {
     "watch": "tsc -w --project tsconfig-cjs.json && tsc -w --project tsconfig.json",
-    "csv-to-sql": "tsc --project tsconfig-cjs.json && tsc --project tsconfig.json && node ./dist/cjs/index.js"
+    "salaries": "tsc --project tsconfig-cjs.json && tsc --project tsconfig.json && node ./dist/cjs/index.js"
   },
   "repository": {
     "type": "git",

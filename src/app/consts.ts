@@ -1,6 +1,7 @@
 import {
   Actualizacion,
   Bono,
+  Dolares,
   Empleados,
   GuardiaRelacion,
   GuardiaTiene,
@@ -45,13 +46,13 @@ export const EXAMPLE_DATASET: Dataset = {
     salario: {
       bruto: 680000,
       neto: 520000,
-      dolares: '',
+      dolares: 'Cobro parte del salario en dólares' as Dolares,
       valor_dolar: NaN,
       conformidad: 2,
       beneficios_adicionales:
         'Abono de Internet, Clases de idiomas, Crédito en billeteras virtuales (Mercado Pago, Naranja X, Ualá), Horarios flexibles, Vacaciones flexibles (adicionales a las reglamentarias)',
     },
-    bono: { cantidad: 'No' as Bono },
+    bono: { bonoCantidad: 'No' as Bono },
     actualizacion: {
       cantidad: 'Uno' as Actualizacion,
       porcentaje: 26,
@@ -60,10 +61,15 @@ export const EXAMPLE_DATASET: Dataset = {
     },
   },
   empresa: { empleados: 'De 51 a 100 personas' as Empleados, recomendado: 0 },
-  estudios: { maximo: '', estado: '', carrera: '', institutcion: '' },
+  estudios: {
+    maximo: 'asdas',
+    estado: 'asdasd',
+    carrera: 'asdasd',
+    institutcion: 'asdad',
+  },
   guardia: {
-    tiene: '' as GuardiaTiene,
-    cobro: NaN,
-    relacion: '' as GuardiaRelacion,
+    tiene: 'No' as GuardiaTiene,
+    cobro: 123,
+    relacion: 'Porcentaje de mi sueldo bruto' as GuardiaRelacion,
   },
 };
