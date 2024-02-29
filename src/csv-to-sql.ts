@@ -1,12 +1,8 @@
-import { Dataset, IndecSeries } from './app/interfaces';
-import { objectToSql, parseColumns, parseEmptyStrings } from './app/parsers';
+import { Dataset, IndecSeries } from './scripts/interfaces';
+import { objectToSql, parseColumns } from './scripts/parsers';
 import fs from 'fs';
 import { parse } from 'csv';
-import { fromFetch } from 'rxjs/fetch';
 import { Subject, take } from 'rxjs';
-import { valuesExtractor, keysExtractor } from './app/objects';
-import { EXAMPLE_DATASET } from './app/consts';
-import { format } from 'sql-formatter';
 
 export function csvToSql() {
   let dataset: Dataset[] = [];

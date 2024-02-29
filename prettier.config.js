@@ -8,6 +8,19 @@ module.exports = {
   trailingComma: 'es5',
   bracketSameLine: true,
   printWidth: 80,
-  plugins: [],
+  plugins: [
+    'prettier-plugin-tailwindcss',
+    'prettier-plugin-organize-imports',
+    '@trivago/prettier-plugin-sort-imports',
+  ],
   endOfLine: 'lf',
+  importOrder: [
+    '^@angular/material/(.*)$',
+    '^@angular/cdk/(.*)$',
+    '^@angular/(.*)$',
+    '^[./]',
+  ],
+  importOrderParserPlugins: ['typescript', 'decorators'],
+  importOrderSeparation: true,
+  importOrderSortSpecifiers: true,
 };
