@@ -1,17 +1,13 @@
 select 
 	count(*) as Encuestados,
-    avg (trabajo_salario_bruto)::numeric(10,2)  as Bruto, 
-    avg (trabajo_salario_neto)::numeric(10,2)  as Neto,
-    avg (trabajo_salario_bruto * 2.4927)::numeric(10,2)  as Bruto_inflacion,
-    avg (trabajo_salario_neto * 2.4927)::numeric(10,2)  as Neto_inflacion,
-    min(trabajo_salario_bruto) as Bruto_minimo,
-    max(trabajo_salario_bruto) as Bruto_maximo,
-    min(trabajo_salario_neto) as Neto_minimo,
-    max(trabajo_salario_neto) as Neto_maximo,
-    min(trabajo_salario_bruto) * 2.4927 as Bruto_minimo_inflacion,
-    max(trabajo_salario_bruto) * 2.4927 as Bruto_maximo_inflacion,
-    min(trabajo_salario_neto) * 2.4927 as Neto_minimo_inflacion,
-    max(trabajo_salario_neto) * 2.4927 as Neto_maximo_inflacion
+    avg (trabajo_salario_bruto)::numeric(10,2)  as "Bruto promedio 07/2023", 
+    avg (trabajo_salario_neto)::numeric(10,2)  as "Neto promedio 07/2023",
+    avg (trabajo_salario_bruto * 2.4927)::numeric(10,2)  as "Bruto promedio 02/2024",
+    avg (trabajo_salario_neto * 2.4927)::numeric(10,2)  as "Neto promedio 02/2024",
+	PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY trabajo_salario_bruto)::numeric(10,2)  as "Bruto mediana 07/2023", 
+    PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY trabajo_salario_neto)::numeric(10,2)  as "Neto mediana 07/2023",
+    PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY trabajo_salario_bruto * 2.4927)::numeric(10,2)  as "Bruto mediana 02/2024",
+    PERCENTILE_CONT(0.5) WITHIN GROUP(ORDER BY trabajo_salario_neto * 2.4927)::numeric(10,2)  as "Neto mediana 02/2024"
 from salaries 
 where 
 	trabajo_salario_bruto > 200000 and

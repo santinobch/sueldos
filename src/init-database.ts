@@ -1,5 +1,6 @@
 import { Client } from 'pg';
 import { csvToSql } from './csv-to-sql';
+import { take } from 'rxjs';
 
 export function initDatabase() {
   const client = new Client({
@@ -13,7 +14,11 @@ export function initDatabase() {
 
   csvToSql()
     .asObservable()
+    .pipe(take(1))
     .subscribe(result => {
-      client.query(result);
+      console.log('Executing query');
+      client.query(result).finally(() => {
+        console.log('Finished');
+      });
     });
 }

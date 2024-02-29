@@ -11,6 +11,10 @@ import { format } from 'sql-formatter';
 export function csvToSql() {
   let dataset: Dataset[] = [];
 
+  const result: Subject<string> = new Subject<string>();
+
+  console.log('Parsing Dataset');
+
   // Parse sysarmy dataset
   fs.createReadStream('./src/data/2023.07_Sysarmy_Dataset.csv')
     .pipe(parse({ delimiter: ',', from_line: 2 }))
@@ -25,15 +29,14 @@ export function csvToSql() {
         error => {
           if (error) console.log(error);
 
-          objectToSql(dataset);
+          console.log('Converting Dataset to SQL query');
+          result.next(objectToSql(dataset));
         }
       );
     })
     .on('error', (error: any) => {
       console.log(error.message);
     });
-
-  const result: Subject<string> = new Subject<string>();
 
   // Get inflation from INDEC
   // fromFetch<IndecSeries>(
