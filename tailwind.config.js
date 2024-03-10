@@ -1,17 +1,15 @@
-import colors from './src/assets/styles/colors';
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./project/src/**/*.{html,ts}'],
+  content: ['projects/website/src/**/*.{html,ts}'],
   // Safelisting is needed for some classes, as they are generated at component initialization,
   // but are not present in the initial html file
   safelist: [],
   theme: {
     // colors: colors,
-    // fontFamily: {
-    //   heading: ['Josefin Sans', 'sans-serif'],
-    //   body: ['DM Sans', 'sans-serif'],
-    // },
+    fontFamily: {
+      heading: ['Josefin Sans', 'sans-serif'],
+      body: ['DM Sans', 'sans-serif'],
+    },
     borderWidth: {
       DEFAULT: '1px',
       0: '0',
