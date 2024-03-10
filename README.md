@@ -20,4 +20,4 @@ All outputs can be found in the `dist` folder
 
 ## Original datasets
 
-All datasets can be found in the `src/data` folder
+All datasets can be found in the `projects/parser/data` folder
