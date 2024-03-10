@@ -10,6 +10,10 @@
 
 `npm run salaries` or `npm run salaries init-database`
 
+## Run website
+
+`ng serve`
+
 ## Outputs
 
 All outputs can be found in the `dist` folder

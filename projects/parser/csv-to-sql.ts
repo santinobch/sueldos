@@ -1,8 +1,9 @@
+import { parse } from 'csv';
+import fs from 'fs';
+import { Subject, take } from 'rxjs';
+
 import { Dataset, IndecSeries } from './scripts/interfaces';
 import { objectToSql, parseColumns } from './scripts/parsers';
-import fs from 'fs';
-import { parse } from 'csv';
-import { Subject, take } from 'rxjs';
 
 export function csvToSql() {
   let dataset: Dataset[] = [];
@@ -12,7 +13,7 @@ export function csvToSql() {
   console.log('Parsing Dataset');
 
   // Parse sysarmy dataset
-  fs.createReadStream('./src/data/2023.07_Sysarmy_Dataset.csv')
+  fs.createReadStream('projects/parser/data/2023.07_Sysarmy_Dataset.csv')
     .pipe(parse({ delimiter: ',', from_line: 2 }))
     .on('data', (row: string[]) => {
       parseColumns(row, dataset, new Date('Jul 01 2023'));
@@ -20,7 +21,7 @@ export function csvToSql() {
     .on('end', () => {
       // Saving to file to have in hand
       fs.writeFile(
-        './dist/JSONs/2023.07_Sysarmy_Dataset.json',
+        'dist/parser/JSONs/2023.07_Sysarmy_Dataset.json',
         JSON.stringify(dataset),
         error => {
           if (error) console.log(error);

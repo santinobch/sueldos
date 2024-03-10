@@ -1,3 +1,6 @@
+import fs from 'fs';
+import { format } from 'sql-formatter';
+
 import { EXAMPLE_DATASET, MONTH_NUMBER } from './consts';
 import {
   Actualizacion,
@@ -10,9 +13,7 @@ import {
   Modalidad,
 } from './enums';
 import { Dataset } from './interfaces';
-import fs from 'fs';
 import { keysExtractor, valuesExtractor } from './objects';
-import { format } from 'sql-formatter';
 
 export function parseEmptyStrings(row: string[]): (string | null)[] {
   return row.map(field => {
@@ -193,13 +194,13 @@ export function objectToSql(dataset: Dataset[]) {
   });
 
   // Minified file
-  fs.writeFile('./dist/queries/2023.07_query.min.sql', query, error => {
+  fs.writeFile('dist/parser/queries/2023.07_query.min.sql', query, error => {
     if (error) console.log(error);
   });
 
   // Beautified file
   fs.writeFile(
-    './dist/queries/2023.07_query.sql',
+    'dist/parser/queries/2023.07_query.sql',
     format(query, { language: 'postgresql' }),
     error => {
       if (error) console.log(error);

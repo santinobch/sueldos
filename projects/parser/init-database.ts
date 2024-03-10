@@ -1,6 +1,7 @@
 import { Client } from 'pg';
-import { csvToSql } from './csv-to-sql';
 import { take } from 'rxjs';
+
+import { csvToSql } from './csv-to-sql';
 
 export function initDatabase() {
   const client = new Client({
