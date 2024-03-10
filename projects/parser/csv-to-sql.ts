@@ -10,7 +10,7 @@ export function csvToSql() {
 
   const result: Subject<string> = new Subject<string>();
 
-  console.log('Parsing Dataset');
+  console.log('Converting Dataset to object');
 
   // Parse sysarmy dataset
   fs.createReadStream('projects/parser/data/2023.07_Sysarmy_Dataset.csv')
@@ -20,14 +20,16 @@ export function csvToSql() {
     })
     .on('end', () => {
       // Saving to file to have in hand
+      console.log('Saving object as JSON');
       fs.writeFile(
         'dist/parser/JSONs/2023.07_Sysarmy_Dataset.json',
         JSON.stringify(dataset),
         error => {
           if (error) console.log(error);
 
-          console.log('Converting Dataset to SQL query');
+          console.log('Converting object to SQL query');
           result.next(objectToSql(dataset));
+          result.complete();
         }
       );
     })

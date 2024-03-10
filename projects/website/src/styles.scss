@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+
+@layer base {
+  h1 {
+    @apply font-heading text-5xl #{!important};
+  }
+  h2 {
+    @apply font-heading text-4xl #{!important};
+  }
+  h3 {
+    @apply font-heading text-3xl #{!important};
+  }
+  h4 {
+    @apply font-heading text-2xl #{!important};
+  }
+  h5 {
+    @apply font-body text-xl #{!important};
+  }
+  h6 {
+    @apply font-body text-lg #{!important};
+  }
+  small {
+    @apply text-sm #{!important};
+  }
+  ul {
+    @apply list-inside list-disc;
+  }
+  ol {
+    @apply list-inside list-decimal;
+  }
+  a {
+    @apply font-medium text-blue-500 hover:underline;
+  }
+}
+
+@tailwind components;
+@tailwind utilities;

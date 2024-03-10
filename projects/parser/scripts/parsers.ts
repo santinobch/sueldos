@@ -150,9 +150,9 @@ export function objectToSql(dataset: Dataset[]) {
   let query = `
       -- Table: public.salaries
   
-      DROP TABLE IF EXISTS public.salaries;
+      DROP TABLE IF EXISTS salaries;
   
-      CREATE TABLE IF NOT EXISTS public.salaries ( id SERIAL PRIMARY KEY,`;
+      CREATE TABLE IF NOT EXISTS salaries ( id SERIAL PRIMARY KEY,`;
 
   values!.forEach((value, i) => {
     let type = 'numeric';
@@ -190,7 +190,7 @@ export function objectToSql(dataset: Dataset[]) {
       }
     });
 
-    query += `INSERT INTO public.salaries VALUES (${i}, ${values});`;
+    query += `INSERT INTO salaries VALUES (${i}, ${values});`;
   });
 
   // Minified file

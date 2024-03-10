@@ -1,4 +1,4 @@
-import { Client } from 'pg';
+import fs from 'fs';
 import { take } from 'rxjs';
 import initSqlJs, { Database } from 'sql.js/dist/sql-wasm';
 
@@ -11,42 +11,21 @@ const SQL_CONFIG: Partial<EmscriptenModule> = {
 };
 
 export function initDatabase() {
-  const client = new Client({
-    user: 'root',
-    password: 'root',
-    host: 'localhost',
-    port: 5432,
-    database: 'salaries',
-  });
-  client.connect();
-
   csvToSql()
     .asObservable()
     .pipe(take(1))
     .subscribe(query => {
-      console.log('Executing query');
+      initSqlJs(SQL_CONFIG).then(SQL => {
+        console.log('Executing query');
 
-      initSqlJs(SQL_CONFIG).then(function (SQL) {
-        //Create the database
-        const db = new SQL.Database();
-        db.run(query);
+        const DB = new SQL.Database();
+        const DATA = DB.run(query).export();
 
-        // // Prepare a statement
-        // const stmt = db.prepare(
-        //   'SELECT * FROM test WHERE col1 BETWEEN $start AND $end'
-        // );
-        // stmt.getAsObject({ $start: 1, $end: 1 }); // {col1:1, col2:111}
+        console.log('Saving database into a file');
 
-        // // Bind new values
-        // stmt.bind({ $start: 1, $end: 2 });
-        // while (stmt.step()) {
-        //   //
-        //   const row = stmt.getAsObject();
-        //   console.log('Here is a row: ' + JSON.stringify(row));
-        // }
-      });
+        const BUFFER = Buffer.from(DATA);
+        fs.writeFileSync('dist/database.sqlite', BUFFER);
 
-      client.query(query).finally(() => {
         console.log('Finished');
       });
     });
