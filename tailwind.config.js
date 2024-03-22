@@ -7,8 +7,8 @@ module.exports = {
   theme: {
     // colors: colors,
     fontFamily: {
-      heading: ['Josefin Sans', 'sans-serif'],
-      body: ['DM Sans', 'sans-serif'],
+      heading: ['Madimi One', 'sans-serif'],
+      body: ['Saira Semi Condensed', 'sans-serif'],
     },
     borderWidth: {
       DEFAULT: '1px',
