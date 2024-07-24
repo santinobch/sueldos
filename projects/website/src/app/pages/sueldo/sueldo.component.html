@@ -1,0 +1,36 @@
+<mat-tab-group>
+  <mat-tab label="Calculadora de sueldo">
+    <!-- Provincia de residencia -->
+    <mat-form-field>
+      <mat-label>Provincia</mat-label>
+      <mat-select>
+        @for (provincia of PROVINCIAS; track provincia) {
+          <mat-option [value]="provincia">{{ provincia }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Especializacion -->
+    <mat-form-field>
+      <mat-label>Especializacion</mat-label>
+      <mat-select>
+        @for (especializacion of ESPECIALIZACIONES; track especializacion) {
+          <mat-option [value]="especializacion">{{
+            especializacion
+          }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <!-- Años de experiencia -->
+
+    <!-- Edad -->
+    <mat-slider min="18" max="90" step="1" class="w-80">
+      <input value="18" matSliderStartThumb step="1" />
+      <input value="22" matSliderEndThumb />
+    </mat-slider>
+
+    <!-- Tecnologias -->
+  </mat-tab>
+  <mat-tab label="Graficos de sueldo"> Content 2 </mat-tab>
+</mat-tab-group>

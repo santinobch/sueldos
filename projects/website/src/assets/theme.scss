@@ -1,5 +1,7 @@
 @use '@angular/material' as mat;
 
+@include mat.core();
+
 $black: #002b36;
 $white: #fdf6e3;
 
@@ -106,4 +108,4 @@ $dark-theme: mat.define-dark-theme(
   )
 );
 
-@include mat.core-theme($dark-theme);
+@include mat.all-component-themes($dark-theme);

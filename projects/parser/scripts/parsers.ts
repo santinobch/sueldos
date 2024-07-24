@@ -149,6 +149,11 @@ export function objectToSql(dataset: Dataset[]) {
 
   let query = `
       -- Table: public.salaries
+
+      DROP TABLE IF EXISTS provincias;
+
+      CREATE TABLE IF NOT EXISTS provincias (name text)
+
   
       DROP TABLE IF EXISTS salaries;
   
