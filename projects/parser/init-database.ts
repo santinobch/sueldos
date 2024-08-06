@@ -2,13 +2,8 @@ import fs from 'fs';
 import { take } from 'rxjs';
 import initSqlJs, { Database } from 'sql.js/dist/sql-wasm';
 
+import { SQL_CONFIG } from '../consts';
 import { csvToSql } from './csv-to-sql';
-
-const SQL_CONFIG: Partial<EmscriptenModule> = {
-  locateFile: filename => {
-    return `node_modules/sql.js/dist/${filename}`;
-  },
-};
 
 export function initDatabase() {
   csvToSql()

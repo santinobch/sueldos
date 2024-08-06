@@ -1,0 +1,19 @@
+<mat-chip
+  class="!cursor-pointer !rounded-lg border-2 !border-{{ color }}-500"
+  [ngClass]="chipClasses()"
+  #chip
+  (mouseenter)="fadeIn()"
+  (mouseleave)="fadeOut()"
+  (click)="clickDetection('chip')">
+  <ng-content select="chip, [chip]"></ng-content>
+</mat-chip>
+
+<div
+  #popup
+  class="fixed w-[600px] max-w-full rounded-lg border-2 border-dashed border-{{
+    color
+  }}-400 bg-white p-3 !text-gray-contrast-500 opacity-0"
+  [style]="{ left: left, top: top, zIndex: zIndex, display: 'none' }"
+  (click)="clickDetection('popup')">
+  <ng-content select="popup, [popup]"></ng-content>
+</div>

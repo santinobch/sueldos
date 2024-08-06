@@ -1,0 +1,33 @@
+<option-chip [color]="color">
+  <chip>
+    <span [ngClass]="{ 'font-bold': _selectedText != '' }">{{ label }}</span>
+    @if (_selectedText != '') {
+      <span>: </span>
+    }
+    <span class="italic">{{ _selectedText }}</span>
+  </chip>
+  <popup>
+    <mat-chip-listbox aria-label="Color selection" multiple>
+      @for (item of _selected; track item) {
+        <mat-chip-option
+          class="!bg-{{ color }}-600"
+          selected
+          (click)="clickChip(item, 'unselect')"
+          >{{ item }}</mat-chip-option
+        >
+      }
+    </mat-chip-listbox>
+    @if (_selected.length > 0) {
+      <hr class="m-2 border-t-2 border-dashed border-{{ color }}-400" />
+    }
+    <mat-chip-listbox aria-label="Color selection">
+      @for (item of data; track item) {
+        <mat-chip-option
+          class="!bg-{{ color }}-400"
+          (click)="clickChip(item, 'select')"
+          >{{ item }}</mat-chip-option
+        >
+      }
+    </mat-chip-listbox>
+  </popup>
+</option-chip>

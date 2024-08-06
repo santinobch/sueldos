@@ -28,6 +28,5 @@ export const ESPECIALIZACIONES = [
   'Docente',
   'Project Manager',
   'Administrativo',
-  'Administrativo',
   'Technical Writer',
 ];

@@ -1,12 +1,10 @@
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
+import { SelectChipsComponent } from '../../components/select-chips/select-chips.component';
 import { ESPECIALIZACIONES } from '../../consts/especializaciones.const';
 import { PROVINCIAS } from '../../consts/provincias.const';
 
@@ -15,20 +13,24 @@ import { PROVINCIAS } from '../../consts/provincias.const';
   templateUrl: './sueldo.component.html',
   styleUrls: ['./sueldo.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    MatTabsModule,
-    MatCardModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    MatSliderModule,
-  ],
+  imports: [CommonModule, MatTabsModule, MatCardModule, SelectChipsComponent],
 })
 export class SueldoComponent implements OnInit {
-  PROVINCIAS = PROVINCIAS;
-  ESPECIALIZACIONES = ESPECIALIZACIONES;
+  ubicacionesSelected: string[] = [];
+  ubicacionesUnselected: string[] = PROVINCIAS.sort();
+
+  tecnologiasSelected: string[] = [];
+  tecnologiasUnselected: string[] = ESPECIALIZACIONES.sort();
 
   constructor() {}
+
+  ubicacionSelectedEvent(ubicaciones: string[]) {
+    this.ubicacionesSelected = ubicaciones;
+  }
+
+  tecnologiasSelectedEvent(tecnologias: string[]) {
+    this.tecnologiasSelected = tecnologias;
+  }
 
   ngOnInit(): void {}
 }
