@@ -17,6 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "baseHref": "https://santinobch.github.io/sueldos/",
             "outputPath": "dist/website",
             "index": "projects/website/src/index.html",
             "main": "projects/website/src/main.ts",
