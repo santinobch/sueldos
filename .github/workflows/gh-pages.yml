@@ -24,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: ng build --configuration production --base-href https://santinobch.github.io/sueldos/
+        run: npm run ng build --configuration production --base-href https://santinobch.github.io/sueldos/
 
       - name: Deploy
         if: success()
