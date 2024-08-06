@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "salaries": "tsc --project projects/parser/tsconfig.cjs.json && tsc --project projects/parser/tsconfig.json && node ./dist/parser/cjs/index.js",
     "analyze-bundle": "ng build --configuration=analyze-bundle && source-map-explorer dist/**/*.js --no-border-checks"
