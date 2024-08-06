@@ -1,0 +1,35 @@
+name: Release version
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release_main:
+    name: Deploy github pages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set configuration & fetch
+        run: |
+          git config --global user.email "ci@bakingdevs.com"
+          git config --global user.name "CI"
+          git fetch --unshallow
+          git checkout main
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 20.x
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build:prod
+
+      - name: Deploy
+        if: success()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist/website
+          enable_jekyll: true
