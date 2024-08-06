@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "salaries": "tsc --project projects/parser/tsconfig.cjs.json && tsc --project projects/parser/tsconfig.json && node ./dist/parser/cjs/index.js"
+    "salaries": "tsc --project projects/parser/tsconfig.cjs.json && tsc --project projects/parser/tsconfig.json && node ./dist/parser/cjs/index.js",
+    "analyze-bundle": "ng build --configuration=analyze-bundle && source-map-explorer dist/**/*.js --no-border-checks"
   },
   "private": true,
   "dependencies": {
@@ -47,6 +48,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.12",
+    "source-map-explorer": "^2.5.3",
     "tailwindcss": "^3.4.1",
     "typescript": "~5.3.3"
   }
